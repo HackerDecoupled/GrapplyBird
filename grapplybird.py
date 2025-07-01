@@ -1,4 +1,4 @@
-# GRAPPLY HOOK V4
+# GRAPPLY HOOK V5
 import pygame
 import sys
 import math
@@ -117,7 +117,7 @@ class Barrier:
 
 # grappling hook logic
 def hook():
-    global hooked, hook_direction
+    global hooked, hook_direction, player_speed_y
     direction = [hook_pos[0] - player.centerx, hook_pos[1] - player.centery]
     distance = math.sqrt(direction[0] ** 2 + direction[1] ** 2)
 
@@ -131,10 +131,7 @@ def hook():
 
     # Update hook direction for momentum
     hook_direction = (direction[0], direction[1])
-
-    # Check if player reached the ground or the cursor
-    if player.y >= GROUND_HEIGHT or distance < HOOK_SPEED:
-        hooked = False
+        
 
 # draw the hook line
 def draw_hook():
@@ -282,10 +279,17 @@ while True:
             reset(speed, score)
 
         # Grappling hook logic
-        if hooked:
+        player_pos = [player.centerx, player.centery]
+        player_pos_x = [player_pos[0] - 30, player_pos[0] + 30]
+        player_pos_y = [player_pos[1] - 30, player_pos[1] + 30]
+        if hooked and ((player_pos_x[0] > hook_pos[0] or hook_pos[0] > player_pos_x[1]) or (player_pos_y[0] > hook_pos[1] and not hook_pos[1] > player_pos_y[1])):
             hook()
+        elif hooked and ((player_pos_x[0] < hook_pos[0] and hook_pos[0] < player_pos_x[1]) and (player_pos_y[0] < hook_pos[1] and hook_pos[1] < player_pos_y[1])):
+            hooked = False
+            player_speed_y = 0
         else:
             # If not hooked, apply regular gravity
+            hooked = False
             player.y += player_speed_y
 
 
