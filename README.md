@@ -7,7 +7,7 @@ Python 3 or higher;
 
 Install these requirements through pip in the terminal; I.E. pip install pygame
 
-pygame
+pygame,
 random
 
 # Known issues/bugs
