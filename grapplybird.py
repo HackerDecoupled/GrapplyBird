@@ -1,4 +1,4 @@
-# GRAPPLY HOOK V5
+# GRAPPLY HOOK V6
 import pygame
 import sys
 import math
@@ -104,6 +104,8 @@ hard_button_text_rect = hard_button_text.get_rect(center=hard_button.center)
 select_button_text = pygame.font.SysFont(None, 36).render("Select a difficulty above", True, WHITE)
 select_button_text_rect = select_button_text.get_rect()
 select_button_text_rect.center = (WIDTH // 2, HEIGHT // 1.5)
+
+current_mode = "Easy"  # Default mode
 
 #Game is started as false so the start button and difficulty buttons show up
 game_started = False
@@ -244,12 +246,15 @@ while True:
                 print("Started game")
             elif easy_button.collidepoint(event.pos):
                 speed = 15
+                current_mode = "Easy"
                 print("Speed set to easy mode")
             elif medium_button.collidepoint(event.pos):
                 speed = 25
+                current_mode = "Medium"
                 print("Speed set to medium mode")
             elif hard_button.collidepoint(event.pos):
                 speed = 35
+                current_mode = "Hard"
                 print("Speed set to hard mode")
 
     screen.fill(BLACK)
@@ -268,7 +273,9 @@ while True:
         pygame.draw.rect(screen, hard_button_color, hard_button)
         screen.blit(hard_button_text, hard_button_text_rect)
         screen.blit(select_button_text, select_button_text_rect)
-
+        # Draw the current mode
+        mode_text = score_font.render("Mode: " + current_mode, True, WHITE)
+        screen.blit(mode_text, (20, 20))  # Display the mode
     if game_started:
         # Move player
         player_speed_y += GRAVITY
@@ -339,8 +346,7 @@ while True:
                 barriers.clear()
                 barrier_num = 0
             iteration += 1
-        if speed == 35 and score > 20:
-            print("switching sides")
+        if speed == 35 and score >= 20:
             if barrier_num < 5 and iteration == 40:
                 draw_top_barrier()
                 draw_bottom_barrier()
@@ -369,3 +375,4 @@ while True:
     pygame.display.flip()
 
     clock.tick(60)
+
