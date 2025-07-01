@@ -15,8 +15,8 @@ random
 2. Scoring more than once when passing through a barrier (somewhat intended)
 
 # Planned Features and QOL
-Button Animations
-Sprites for barriers, player, background, etc
-Music?!?!
-Better animations and calculations for grappling hook
-complete rewrrite because it needs to happen for sprite handling anyway
+1. Button Animations
+2. Sprites for barriers, player, background, etc
+3. Music?!?!
+4. Better animations and calculations for grappling hook
+5. complete rewrrite because it needs to happen for sprite handling anyway
